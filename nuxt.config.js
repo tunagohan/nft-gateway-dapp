@@ -2,6 +2,8 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
+  srcDir: 'src',
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'nft-gateway-dapp',
@@ -34,7 +36,7 @@ export default {
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/composition-api',
+    '@nuxtjs/composition-api/module',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
