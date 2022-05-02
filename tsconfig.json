@@ -17,5 +17,6 @@
     },
     "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node"]
   },
+  "files": ["./src/types/nuxt-app.d.ts", "./src/types/vue.d.ts"],
   "exclude": ["node_modules", ".nuxt", "dist"]
 }
