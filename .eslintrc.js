@@ -9,7 +9,22 @@ module.exports = {
     'plugin:nuxt/recommended',
     'prettier',
   ],
-  plugins: [],
+  plugins: ['prettier'],
   // add your custom rules here
-  rules: {},
+  rules: {
+    'vue/multi-word-component-names': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        args: 'all',
+        argsIgnorePattern: '^_',
+        ignoreRestSiblings: true,
+      },
+    ],
+    'nuxt/no-cjs-in-config': 'off',
+    'max-lines': [
+      'error',
+      { max: 400, skipBlankLines: false, skipComments: true },
+    ],
+  },
 }
