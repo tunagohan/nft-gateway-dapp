@@ -90,57 +90,6 @@ export default defineComponent({
       return accounts[0]
     }
 
-    const getTokenBalance = (address: string) => {
-      const web3 = new Web3()
-
-      web3.setProvider(
-        new Web3.providers.HttpProvider(
-          'https://ropsten.infura.io/v3/674fa8842b484b24987e1267a15f06cc'
-        )
-      )
-
-      const WALLET_ADDRESS = address
-      const CONTRACT_ADDRESS = '0xc2fdf34114fccB32dF11f0852F61b9165Ec872fF'
-
-      const minABI: AbiItem[] = [
-        {
-          constant: true,
-          inputs: [{ name: '_owner', type: 'address' }],
-          name: 'balanceOf',
-          outputs: [{ name: 'balance', type: 'uint256' }],
-          type: 'function',
-        },
-        {
-          constant: true,
-          inputs: [],
-          name: 'decimals',
-          outputs: [{ name: '', type: 'uint8' }],
-          type: 'function',
-        },
-      ]
-
-      const contract = new web3.eth.Contract(minABI, CONTRACT_ADDRESS)
-
-      const balanceResult = contract.methods
-        .balanceOf(WALLET_ADDRESS)
-        .call()
-        .then((res: any) => {
-          console.log('balanceResult', res)
-          const balance = contract.methods
-            .decimals()
-            .call()
-            .then((decimal: any) => {
-              console.log(decimal)
-              return res / 10 ** decimal
-            })
-          return balance
-        })
-        .then((balance: any) => {
-          return balance
-        })
-      return balanceResult
-    }
-
     const getOpenSeaAssets = async (accountAddress: string) => {
       const provider = new Web3.providers.HttpProvider(
         'https://mainnet.infura.io'
@@ -174,25 +123,28 @@ export default defineComponent({
     }
 
     const login = async () => {
-      await getAccount().then((res: any) => {
-        console.log('getAccount', res)
-        walletAddress.value = res
-        getOpenSeaAssets(res)
-        getTokenBalance(res)
-          .then((res: any) => {
-            howmany.value = res
-          })
-          .finally(() => {
-            load.value = true
-          })
+      // Metamaskがインストールされていない
+      if (typeof Web3 == 'undefined' && typeof window.ethereum == 'undefined') {
+        console.log('Wallet is not installed!')
+        return
+      }
+
+      window.web3 = new Web3(window.ethereum)
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts',
       })
 
-      if (window.ethereum) return
-      console.log('else mounted')
-      window.addEventListener('ethereum#initialized', handleEthereum, {
-        once: true,
-      })
-      setTimeout(handleEthereum, 3000)
+      window.web3.eth.personal
+        .sign('特定のNFTを所有する人が見れるサイトへ署名する', accounts[0])
+        .then((result: any) => {
+          console.log(result)
+
+          getOpenSeaAssets(accounts[0])
+
+          walletAddress.value = accounts[0]
+
+          load.value = true
+        })
     }
 
     return {
