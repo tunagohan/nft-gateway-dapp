@@ -1,7 +1,7 @@
 <template>
   <section class="h-screen w-screen flex justify-center items-center">
     <div class="flex justify-center items-center" v-if="!walletAddress">
-      Please Login For Metamask　　
+      <span class="mr-8">Please Login For Metamask</span>
       <button class="btn btn-metamask" @click="login">
         <img :src="require('@/assets/images/metamask.svg')" alt="Metamask" />
       </button>
