@@ -58,7 +58,9 @@ const config: NuxtConfig = {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: ['@ethersproject', 'ethers'],
+  },
 }
 
 export default config
