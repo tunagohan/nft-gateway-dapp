@@ -1,4 +1,4 @@
-const envSet = require(`./env/.env.development.ts`)
+import envSet from './env/.env.development'
 import { NuxtConfig } from '@nuxt/types'
 
 const config: NuxtConfig = {

@@ -1,7 +1,9 @@
 import { NuxtOptionsEnv } from '@nuxt/types/config/env'
 
-module.exports = {
+const envSet: NuxtOptionsEnv = {
   mode: process.env.NODE_ENV,
   nodeEnv: 'development',
   openSeaApiKey: process.env.OPENSEA_API_KEY,
-} as NuxtOptionsEnv
+}
+
+export default envSet

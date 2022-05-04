@@ -30,29 +30,8 @@
 <script lang="ts">
 import { defineComponent, ref, reactive } from '@nuxtjs/composition-api'
 import Web3 from 'web3'
-import { AbiItem } from 'web3-utils'
 import { OpenSeaPort, Network } from 'opensea-js'
-import { WyvernSchemaName, OpenSeaAsset } from 'opensea-js/lib/types'
-
-export type OpenSeaNft = {
-  name: ''
-  imageUrl: ''
-  description: ''
-  permalink: ''
-}
-
-export interface Asset {
-  // The asset's token ID, or null if ERC-20
-  tokenId: string | null
-  // The asset's contract address
-  tokenAddress: string
-  // The Wyvern schema name (defaults to "ERC721") for this asset
-  schemaName?: WyvernSchemaName
-  // Optional for ENS names
-  name?: string
-  // Optional for fungible items
-  decimals?: number
-}
+import { OpenSeaAsset } from 'opensea-js/lib/types'
 
 export default defineComponent({
   setup() {
@@ -71,24 +50,24 @@ export default defineComponent({
       numSales: 0 as number,
     })
 
-    const handleEthereum = () => {
-      const { ethereum } = window as any
-      if (ethereum && ethereum.isMetaMask) {
-        // console.log("Ethereum successfully detected!");
-        console.log(ethereum.selectedAddress)
-        const myaddress = ethereum.selectedAddress
-        return myaddress
-      } else {
-        console.log('Please install MetaMask!')
-      }
-    }
+    // const handleEthereum = () => {
+    //   const { ethereum } = window as any
+    //   if (ethereum && ethereum.isMetaMask) {
+    //     // console.log("Ethereum successfully detected!");
+    //     console.log(ethereum.selectedAddress)
+    //     const myaddress = ethereum.selectedAddress
+    //     return myaddress
+    //   } else {
+    //     console.log('Please install MetaMask!')
+    //   }
+    // }
 
-    const getAccount = async () => {
-      const accounts = await window.ethereum.request({
-        method: 'eth_requestAccounts',
-      })
-      return accounts[0]
-    }
+    // const getAccount = async () => {
+    //   const accounts = await window.ethereum.request({
+    //     method: 'eth_requestAccounts',
+    //   })
+    //   return accounts[0]
+    // }
 
     const getOpenSeaAssets = async (accountAddress: string) => {
       const provider = new Web3.providers.HttpProvider(
@@ -125,7 +104,7 @@ export default defineComponent({
     const login = async () => {
       // Metamaskがインストールされていない
       if (typeof Web3 == 'undefined' && typeof window.ethereum == 'undefined') {
-        console.log('Wallet is not installed!')
+        console.log('Metamaskをインストールしてください')
         return
       }
 
