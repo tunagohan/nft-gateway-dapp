@@ -11,45 +11,67 @@
         <span class="rounded p-3"
           >Your Wallet Address: {{ walletAddress }}</span
         >
-        <p class="rounded p-3">super user!</p>
+
+        <div v-if="ownersState.owners.includes(walletAddress)">
+          <p class="rounded p-3">Your Special User!</p>
+        </div>
       </div>
     </div>
   </section>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
-import { ethers } from 'ethers'
+import { defineComponent, ref, reactive } from '@nuxtjs/composition-api'
+import { Moralis } from 'Moralis'
 
 export default defineComponent({
   setup() {
     const walletAddress = ref('0x0')
+    const ownersState = reactive({
+      owners: [] as string[],
+    })
     const isLocked = ref(true)
 
+    const serverUrl = process.env.moralisServerUrl || ''
+    const appId = process.env.moralisAppId || ''
+    const moralisSecret = process.env.moralisSecret || ''
+
     const connectWallet = async () => {
-      try {
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        if (provider) {
-          await provider.send('eth_requestAccounts', [])
-          const signer = provider.getSigner()
-          walletAddress.value = await signer.getAddress()
+      await Moralis.start({ serverUrl, appId, moralisSecret })
+
+      Moralis.Web3.authenticate().then((user: any) => {
+        walletAddress.value = user.get(`ethAddress`)
+
+        getNFTOwners().then((tokenIdOwners) => {
+          tokenIdOwners['result']?.forEach((nft: any) => {
+            ownersState.owners.push(nft.owner_of)
+          })
+
           isLocked.value = false
-        } else {
-          return {
-            error: 'Please install Metamask at https://metamask.io',
-          }
-        }
-      } catch (error) {
-        return {
-          error: 'An unexpected error occurs',
-        }
+        })
+      })
+    }
+
+    const getNFTOwners = async () => {
+      const options = {
+        chain: 'polygon',
+        address: '0x2953399124F0cBB46d2CbACD8A89cF0599974963',
+        token_id:
+          '90487491004223377861610073469700476664557803137508186316628633382456240637404',
+        format: 'decimal',
       }
+
+      const tokenIdOwners = await Moralis.Web3API.token
+        .getTokenIdOwners(options)
+        .then((tokenIdOwners) => tokenIdOwners)
+      return tokenIdOwners
     }
 
     return {
       walletAddress,
       isLocked,
       connectWallet,
+      ownersState,
     }
   },
 })
