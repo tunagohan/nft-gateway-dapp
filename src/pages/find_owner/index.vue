@@ -1,0 +1,52 @@
+<template>
+  <div>
+    <div>
+      <Header />
+
+      <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+          <h1 class="text-3xl font-bold leading-tight text-gray-900">
+            Dashboard
+          </h1>
+        </div>
+      </header>
+      <main>
+        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+          <!-- Replace with your content -->
+          <div class="px-4 py-6 sm:px-0">
+            <div
+              class="border-4 border-dashed border-gray-200 rounded-lg h-96"
+            ></div>
+          </div>
+          <!-- /End replace -->
+        </div>
+      </main>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import Header from '@/components/Header.vue'
+
+export default defineComponent({
+  components: {
+    Header,
+  },
+  setup(_, { root: { $accessor } }) {
+    const walletAddress = ref($accessor.wallet.walletAddress)
+    const isOpen = ref(false)
+
+    const toggle = () => {
+      isOpen.value = !isOpen.value
+    }
+
+    return {
+      toggle,
+
+      walletAddress,
+      isOpen,
+    }
+  },
+})
+</script>

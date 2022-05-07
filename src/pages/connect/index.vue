@@ -30,7 +30,7 @@ export default defineComponent({
           $accessor.wallet.setAddress(walletAddress)
         })
         .then(() => {
-          router.push('/my')
+          router.push('/find_owner')
         })
     }
 

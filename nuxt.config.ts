@@ -24,7 +24,7 @@ const config: NuxtConfig = {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['notyf/notyf.min.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -50,6 +50,7 @@ const config: NuxtConfig = {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    'nuxt-clipboard2',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
