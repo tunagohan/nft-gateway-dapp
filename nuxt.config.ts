@@ -41,6 +41,7 @@ const config: NuxtConfig = {
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
     '@nuxtjs/composition-api/module',
+    'nuxt-typed-vuex',
   ],
 
   env: envSet,
@@ -60,6 +61,10 @@ const config: NuxtConfig = {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: ['@ethersproject', 'ethers'],
+  },
+
+  router: {
+    middleware: 'walletRequired',
   },
 }
 

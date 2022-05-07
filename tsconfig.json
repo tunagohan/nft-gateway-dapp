@@ -11,12 +11,18 @@
     "noEmit": true,
     "experimentalDecorators": true,
     "baseUrl": ".",
+    "resolveJsonModule": true,
     "paths": {
       "~/*": ["./src/*"],
       "@/*": ["./src/*"]
     },
     "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node"]
   },
-  "files": ["./src/types/nuxt-app.d.ts", "./src/types/vue.d.ts"],
+  "files": [
+    "./src/types/nuxt-app.d.ts",
+    "./src/types/vue.d.ts",
+    "./src/types/index.d.ts"
+  ],
+  "include": ["./src/**/*"],
   "exclude": ["node_modules", ".nuxt", "dist"]
 }
