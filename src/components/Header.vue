@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="hidden md:block">
-          <div class="ml-4 flex items-center ml-6 mr-6">
+          <div v-if="isMatic" class="ml-4 flex items-center ml-6 mr-6">
             <span class="invisible lg:visible text-white ml-6 mr-6">
               {{ walletAddress }}
             </span>
@@ -28,6 +28,15 @@
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
             >
               Copy!
+            </button>
+          </div>
+
+          <div v-else class="ml-4 flex items-center ml-6 mr-6">
+            <button
+              @click="switchNetwork"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+            >
+              Switch Network Matic Network
             </button>
           </div>
         </div>
@@ -39,10 +48,14 @@
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { success } from '@/utils/notyf'
+import { Moralis } from 'moralis'
 
 export default defineComponent({
   setup(_, { root: { $accessor, $copyText } }) {
     const walletAddress = ref($accessor.wallet.walletAddress)
+    const currentChainId = ref(Moralis.chainId)
+    const maticChainId = '0x89'
+    const isMatic = ref(currentChainId.value === '0x89')
 
     const copyAddress = () => {
       $copyText(walletAddress.value).then(() => {
@@ -50,9 +63,17 @@ export default defineComponent({
       })
     }
 
+    const switchNetwork = async () => {
+      if (!isMatic.value) {
+        await Moralis.switchNetwork(maticChainId)
+      }
+    }
+
     return {
       copyAddress,
       walletAddress,
+      switchNetwork,
+      isMatic,
     }
   },
 })
