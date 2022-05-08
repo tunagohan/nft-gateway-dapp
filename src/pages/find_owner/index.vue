@@ -50,6 +50,7 @@
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import Header from '@/components/Header.vue'
 import { Moralis } from 'moralis'
+import { operations } from 'moralis/types/generated/web3Api'
 
 export default defineComponent({
   components: {
@@ -69,7 +70,8 @@ export default defineComponent({
       const contractAddress = inputUrl.value.split('/')[5]
       const tokenId = inputUrl.value.split('/')[6]
 
-      const options = {
+      const options: operations['getTokenIdOwners']['parameters']['query'] &
+        operations['getTokenIdOwners']['parameters']['path'] = {
         chain: 'polygon',
         address: contractAddress,
         token_id: tokenId,

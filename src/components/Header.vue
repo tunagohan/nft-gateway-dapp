@@ -6,12 +6,12 @@
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline">
               <a
-                href="#"
+                href="/find_owner"
                 class="px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700"
                 >NFT Owner's</a
               >
               <a
-                href="#"
+                href="/multi_transfer"
                 class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
                 >工事中</a
               >
@@ -55,7 +55,7 @@ export default defineComponent({
     const walletAddress = ref($accessor.wallet.walletAddress)
     const maticChainId = '0x89'
 
-    const currentChainId = ref(Moralis.chainId)
+    const currentChainId = ref($accessor.wallet.currentChainId)
     const isMatic = ref(currentChainId.value === maticChainId)
 
     const copyAddress = () => {
@@ -74,6 +74,7 @@ export default defineComponent({
     }
 
     return {
+      currentChainId,
       copyAddress,
       walletAddress,
       switchNetwork,

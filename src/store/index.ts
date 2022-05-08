@@ -5,7 +5,7 @@ import * as wallet from './wallet'
 export const state = () => ({})
 
 const initialState = {
-  walletAddress: wallet.initialState,
+  wallet: wallet.initialState,
 }
 
 export const getters = getterTree(state, {})

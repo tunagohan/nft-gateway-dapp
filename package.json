@@ -37,6 +37,7 @@
     "nuxt-typed-vuex": "^0.3.0",
     "opensea-js": "^2.0.1",
     "vue": "^2.6.14",
+    "vue-csv-import": "^3.3.8",
     "vue-server-renderer": "^2.6.14",
     "vue-template-compiler": "^2.6.14",
     "web3": "^1.7.3",
