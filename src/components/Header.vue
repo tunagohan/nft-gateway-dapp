@@ -29,6 +29,13 @@
             >
               Copy!
             </button>
+
+            <button
+              @click="logout"
+              class="ml-6 bg-transparent text-white font-bold py-2 px-4 rounded-full"
+            >
+              Logout
+            </button>
           </div>
 
           <div v-else class="ml-4 flex items-center ml-6 mr-6">
@@ -46,12 +53,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRouter } from '@nuxtjs/composition-api'
 import { success } from '@/utils/notyf'
 import { Moralis } from 'moralis'
 
 export default defineComponent({
   setup(_, { root: { $accessor, $copyText } }) {
+    const router = useRouter()
     const walletAddress = ref($accessor.wallet.walletAddress)
     const maticChainId = '0x89'
 
@@ -60,7 +68,7 @@ export default defineComponent({
 
     const copyAddress = () => {
       $copyText(walletAddress.value).then(() => {
-        success('Copied!')
+        success('コピーしました')
       })
     }
 
@@ -73,12 +81,20 @@ export default defineComponent({
       }
     }
 
+    const logout = async () => {
+      await Moralis.User.logOut().then(() => {
+        success('ログアウトしました')
+        router.push('/')
+      })
+    }
+
     return {
       currentChainId,
       copyAddress,
       walletAddress,
       switchNetwork,
       isMatic,
+      logout,
     }
   },
 })

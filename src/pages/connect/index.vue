@@ -22,12 +22,15 @@ export default defineComponent({
       const appId = process.env.moralisAppId
       const moralisSecret = process.env.moralisSecret
       await Moralis.start({ serverUrl, appId, moralisSecret })
+      await Moralis.enableWeb3()
 
       // 署名を行う
       Moralis.authenticate()
         .then((user: any) => {
           const walletAddress = user.get(`ethAddress`)
           $accessor.wallet.setAddress(walletAddress)
+          const currentChainId = Moralis.getChainId()
+          $accessor.wallet.setChainId(currentChainId)
         })
         .then(() => {
           router.push('/find_owner')

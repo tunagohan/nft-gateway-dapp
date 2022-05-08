@@ -25,7 +25,6 @@ const middleware: Middleware = async ({ app, route, redirect }) => {
     app.$accessor.wallet.setAddress(walletAddress)
     const currentChainId = Moralis.getChainId()
     app.$accessor.wallet.setChainId(currentChainId)
-    console.log(`wallet address: ${walletAddress}, chainId: ${currentChainId}`)
 
     return
   }
