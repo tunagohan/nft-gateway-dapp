@@ -51,6 +51,7 @@ const config: NuxtConfig = {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     'nuxt-clipboard2',
+    'nuxt-buefy',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

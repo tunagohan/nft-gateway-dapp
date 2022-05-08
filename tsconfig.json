@@ -16,7 +16,7 @@
       "~/*": ["./src/*"],
       "@/*": ["./src/*"]
     },
-    "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node"]
+    "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node", "buefy/types"]
   },
   "files": [
     "./src/types/nuxt-app.d.ts",
