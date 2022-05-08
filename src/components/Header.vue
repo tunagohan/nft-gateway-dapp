@@ -53,9 +53,10 @@ import { Moralis } from 'moralis'
 export default defineComponent({
   setup(_, { root: { $accessor, $copyText } }) {
     const walletAddress = ref($accessor.wallet.walletAddress)
-    const currentChainId = ref(Moralis.chainId)
     const maticChainId = '0x89'
-    const isMatic = ref(currentChainId.value === '0x89')
+
+    const currentChainId = ref(Moralis.chainId)
+    const isMatic = ref(currentChainId.value === maticChainId)
 
     const copyAddress = () => {
       $copyText(walletAddress.value).then(() => {
@@ -65,7 +66,10 @@ export default defineComponent({
 
     const switchNetwork = async () => {
       if (!isMatic.value) {
-        await Moralis.switchNetwork(maticChainId)
+        await Moralis.switchNetwork(maticChainId).then(() => {
+          currentChainId.value = maticChainId
+          isMatic.value = true
+        })
       }
     }
 
